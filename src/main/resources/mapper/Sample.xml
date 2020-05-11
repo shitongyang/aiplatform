@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iscas.aiplatform.mapper.SampleMapper">
+    <insert id="addSample">
+        INSERT INTO sample (sample_path,task_id) VALUES(#{sample_path},#{id})
+    </insert>
+
+    <select id="getSampleInfo" resultType="java.util.Map">
+        SELECT  username,output_format_path,fault_set,output_format_des FROM output_format WHERE id = #{id}
+    </select>
+</mapper>
