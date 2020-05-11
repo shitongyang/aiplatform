@@ -53,12 +53,14 @@ public class SampleServiceImpl implements SampleService {
             String userName = info.get("username");
             String fault_set = info.get("fault_set");
             String output_format_path = info.get("output_format_path");
+            String output_format_no = output_format_path.split("/")[3];
             //读取LS文件中的摘要信息
             while (status) {
                 List<String> pathList = fileClient.getContent(SampleConfig.rootPath + "/result_index.txt", "utf-8");
                 int fault_NO = Integer.parseInt(fault_set);
                 for (int i = pathList.size()-1; i >= 0; i--) {
-                    File file = new File("/result/sample" + pathList.get(i));
+                    String res = SampleConfig.resultPath + pathList.get(i) + "/" + userName + "/" + fault_set+"/"+output_format_no;
+                    File file = new File(res);
                     if (!file.exists()) {
                         List<String> errorList = fileClient.getPath(SampleConfig.rootPath + pathList.get(i), "S11");
                         /**
@@ -69,7 +71,7 @@ public class SampleServiceImpl implements SampleService {
                          * 4.读取仿真结果，写入结果目录
                          **/
                         //依次读取故障集的内容
-                        List<String> error = fileClient.getContent(SampleConfig.rootPath + pathList.get(i) + "/" + errorList.get(fault_NO), "utf-8");
+                        List<String> error = fileClient.getContent(SampleConfig.rootPath + pathList.get(i) + "/" + errorList.get(fault_NO-1), "utf-8");
                         //将故障内容写入
                         fileClient.writeResult(error, SampleConfig.rootPath + pathList.get(i) + "/ST.S11", "utf-8");
                         //将输出格式写入
@@ -79,11 +81,7 @@ public class SampleServiceImpl implements SampleService {
                         boolean isOK = stClient.startST(SampleConfig.rootPath + pathList.get(i));
                         //读取结果，将故障集与仿真结果保存在结果目录
                         if (isOK) {
-                            String res = SampleConfig.resultPath + pathList.get(i) + "/" + userName + "/" + fault_set;
-                            File file_res = new File(res);
-                            if (!file_res.exists()) {
-                                file_res.mkdirs();
-                            }
+                            file.mkdirs();
                             //将故障集带入结果目录下
                             fileClient.writeResult(error, res + "/ST.S11", "utf-8");
                             //将仿真结果文件带入结果目录下
