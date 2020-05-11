@@ -57,7 +57,7 @@ public class SampleServiceImpl implements SampleService {
             while (status) {
                 List<String> pathList = fileClient.getContent(SampleConfig.rootPath + "/result_index.txt", "utf-8");
                 int fault_NO = Integer.parseInt(fault_set);
-                for (int i = pathList.size(); i > 0; i--) {
+                for (int i = pathList.size()-1; i >= 0; i--) {
                     File file = new File("/result/sample" + pathList.get(i));
                     if (!file.exists()) {
                         List<String> errorList = fileClient.getPath(SampleConfig.rootPath + pathList.get(i), "S11");
@@ -82,7 +82,7 @@ public class SampleServiceImpl implements SampleService {
                             String res = SampleConfig.resultPath + pathList.get(i) + "/" + userName + "/" + fault_set;
                             File file_res = new File(res);
                             if (!file_res.exists()) {
-                                file.mkdirs();
+                                file_res.mkdirs();
                             }
                             //将故障集带入结果目录下
                             fileClient.writeResult(error, res + "/ST.S11", "utf-8");

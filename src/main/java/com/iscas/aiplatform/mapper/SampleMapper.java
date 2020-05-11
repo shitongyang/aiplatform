@@ -15,5 +15,5 @@ import java.util.Map;
 @Component
 public interface SampleMapper {
     public Map<String,String> getSampleInfo(int id);
-    public int addSample(String samplePath,int id);
+    public int addSample(String sample_path,int id);
 }
