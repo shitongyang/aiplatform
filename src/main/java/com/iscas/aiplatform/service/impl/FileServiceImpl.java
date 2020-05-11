@@ -1,7 +1,6 @@
 package com.iscas.aiplatform.service.impl;
 
-import com.iscas.aiplatform.mapper.UserMapper;
-import com.iscas.aiplatform.mapper.WriteToDBMapper;
+import com.iscas.aiplatform.mapper.OutputFormatMapper;
 import com.iscas.aiplatform.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +15,10 @@ import org.springframework.stereotype.Service;
 public class FileServiceImpl implements FileService {
 
     @Autowired
-    private WriteToDBMapper writeToDBMapper;
+    private OutputFormatMapper outputFormatMapper;
     @Override
     public int writeToDB(String path, String describe, String username) {
-        return writeToDBMapper.writeToOutputFormat(path,describe,username);
+
+        return outputFormatMapper.writeToOutputFormat(path,describe,username);
     }
 }

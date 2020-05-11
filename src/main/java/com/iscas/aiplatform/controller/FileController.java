@@ -22,6 +22,7 @@ public class FileController {
 
     @Autowired
     private FileService fileService;
+
     @RequestMapping(value="/gouploadimg", method = RequestMethod.GET)
     public String goUploadImg() {
         //跳转到 templates 目录下的 uploadimg.html
@@ -30,12 +31,13 @@ public class FileController {
 
     @RequestMapping(value="/testuploadimg", method = RequestMethod.POST)
     public @ResponseBody String uploadImg(@RequestParam("file") MultipartFile file,
-                     HttpServletRequest request) {
-        String contentType = file.getContentType();
+                     HttpServletRequest request,@RequestParam(value = "describe",defaultValue = "特高压") String describe,@RequestParam(value = "username",defaultValue = "张三")String username) {
         String fileName = file.getOriginalFilename();
-        String filePath = request.getSession().getServletContext().getRealPath("imgupload/");
+        String filePath = "/format/"+username;
 
         System.out.println("1111"+filePath+"11111");
+
+        filePath=filePath+"/"+FileUtil.getFolderCount(filePath)+"/";
 
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
@@ -43,7 +45,7 @@ public class FileController {
             // TODO: handle exception
         }
         //返回json
-        fileService.writeToDB(filePath,"这是电流","张三");
+        fileService.writeToDB(filePath,describe,username);
         return "uploadimg success";
     }
 }
