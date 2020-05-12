@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.iscas.aiplatform.mapper.ModelFileMapper">
+
+    <insert id="insertModelFile" >
+        insert into model_file(model_name,model_des,model_format,is_share,username,model_store_path,update_time) values(#{modelName},#{modelDes},#{modelFormat},0,#{username},#{modelStorePath},NOW())
+    </insert>
+
+    <update id="shareModelFile">
+        update model_file set is_share=1 where id=#{id}
+    </update>
+
+    <update id="cancelShareModelFile">
+        update model_file set is_share=0 where id=#{id}
+    </update>
+
+    <select id="selectModelFileByName" resultType="java.util.Map">
+       select * from model_file m where m.is_share='1' and m.username!=#{username}
+union select * from model_file m where m.username=#{username}
+    </select>
+
+</mapper>

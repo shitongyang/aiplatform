@@ -2,7 +2,6 @@ package com.iscas.aiplatform.controller;
 
 import com.iscas.aiplatform.service.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -20,7 +19,7 @@ public class SampleController {
         sampleService.createSample(id);
         //System.out.println("123");
     }
-    @RequestMapping("/stopSample")
+    @RequestMapping(value="/stopSample",method = RequestMethod.GET)
     public void stopSample(int id){
         sampleService.createSample(id);
     }
