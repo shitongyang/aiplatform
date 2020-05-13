@@ -4,8 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.iscas.aiplatform.entity.Result;
 import com.iscas.aiplatform.mapper.OutputFormatMapper;
 import com.iscas.aiplatform.service.OutputFormatService;
+import com.iscas.aiplatform.utils.JSONFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author yangshitong
@@ -44,5 +48,18 @@ public class OutputFormatServiceImpl implements OutputFormatService {
             result.setMsg("取消共享失败");
         }
         return JSON.toJSONString(result);
+    }
+
+    @Override
+    public String addOutputFormat(String path, String describe, String username, String faultSet) {
+        outputFormatMapper.writeToOutputFormat(path,describe,username,faultSet);
+        return "success";
+    }
+
+    @Override
+    public String showSampleByName(String username) {
+        List<Map<String,Object>> list=outputFormatMapper.showSampleByName(username);
+        Result result= new Result("访问成功",true,list);
+        return JSON.toJSONString(result, JSONFilter.filter);
     }
 }

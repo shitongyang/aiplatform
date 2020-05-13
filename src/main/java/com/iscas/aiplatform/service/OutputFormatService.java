@@ -13,4 +13,10 @@ public interface OutputFormatService {
 
     String cancelShareSample(int id);
     //取消分享样本数据
+
+    String addOutputFormat(String path,String describe,String username,String faultSet);
+    //向样本输出格式表里添加记录
+
+    String showSampleByName(String username);
+    //根据用户名字展示样本数据
 }

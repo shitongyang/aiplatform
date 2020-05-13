@@ -31,4 +31,8 @@ public class OutputFormatController {
         return outputFormatService.cancelShareSample(id);
     }
 
+    @RequestMapping("showSample")
+    public String showSampleByName(@RequestParam("username")String username){
+        return outputFormatService.showSampleByName(username);
+    }
 }

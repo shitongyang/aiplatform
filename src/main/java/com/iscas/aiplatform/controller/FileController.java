@@ -1,7 +1,7 @@
 package com.iscas.aiplatform.controller;
 
-import com.iscas.aiplatform.service.FileService;
 import com.iscas.aiplatform.service.ModelFileService;
+import com.iscas.aiplatform.service.OutputFormatService;
 import com.iscas.aiplatform.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin("*")
 public class FileController {
 
+
     @Autowired
-    private FileService fileService;
+    private OutputFormatService outputFormatService;
 
     @Autowired
     private ModelFileService modelFileService;
@@ -35,7 +36,8 @@ public class FileController {
 
     @RequestMapping(value="/testuploadimg", method = RequestMethod.POST)
     public @ResponseBody String uploadImg(@RequestParam("file") MultipartFile file,
-                     HttpServletRequest request,@RequestParam(value = "describe",defaultValue = "特高压") String describe,@RequestParam(value = "username",defaultValue = "张三")String username) {
+                     HttpServletRequest request,@RequestParam(value = "describe",defaultValue = "特高压") String describe,
+                                          @RequestParam(value = "username",defaultValue = "张三")String username,@RequestParam(value="faultSet",defaultValue = "故障A")String faultSet) {
         String fileName = file.getOriginalFilename();
         String filePath = "/format/"+username;
 
@@ -49,7 +51,8 @@ public class FileController {
             // TODO: handle exception
         }
         //返回json
-        fileService.writeToDB(filePath,describe,username);
+        outputFormatService.addOutputFormat(filePath,describe,username,faultSet);
+        //fileService.writeToDB(filePath,describe,username);
         return "uploadimg success";
     }
 

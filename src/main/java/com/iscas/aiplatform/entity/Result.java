@@ -43,4 +43,19 @@ public class Result<T> {
     public void setDetail(T detail) {
         this.detail = detail;
     }
+
+   public Result(String msg,boolean success){
+      this.msg=msg;
+      this.success=success;
+    }
+
+    public Result(){
+
+    }
+    public Result(String msg,boolean success,T detail){
+        this.msg=msg;
+        this.success=success;
+        this.detail=detail;
+    }
+
 }

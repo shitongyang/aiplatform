@@ -15,4 +15,8 @@
         update output_format set is_share=0 where id=#{id}
     </update>
 
+    <select id="showSampleByName" resultType="java.util.Map">
+        select * from output_format o where o.username=#{username}
+    </select>
+
 </mapper>

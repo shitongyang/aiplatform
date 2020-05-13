@@ -26,4 +26,5 @@ public interface ModelFileMapper {
     //取消分享模型文件
 
     List<Map<String,Object>> selectModelFileByName(String username);
+    //展示样本文件
 }
