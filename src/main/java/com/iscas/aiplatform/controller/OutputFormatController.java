@@ -1,11 +1,11 @@
 package com.iscas.aiplatform.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.iscas.aiplatform.service.OutputFormatService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author yangshitong
@@ -17,22 +17,39 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("*")
 public class OutputFormatController {
 
+    Logger logger= LoggerFactory.getLogger(getClass());
+
     @Autowired
     private OutputFormatService outputFormatService;
 
     @RequestMapping("shareSample")
-    public String shareSample(@RequestParam("id") int id){
-
-        return outputFormatService.shareSample(id);
+    public String shareSample(@RequestBody String message){
+        JSONObject object = JSONObject.parseObject(message);
+        logger.info("共享样本数据"+message);
+        return outputFormatService.shareSample(object.getIntValue("id"));
     }
 
     @RequestMapping("cancelShareSample")
-    public String cancelShareSample(@RequestParam("id") int id){
-        return outputFormatService.cancelShareSample(id);
+    public String cancelShareSample(@RequestBody String message){
+        logger.info("取消共享样本数据"+message);
+        JSONObject object = JSONObject.parseObject(message);
+        return outputFormatService.cancelShareSample(object.getIntValue("id"));
     }
 
-    @RequestMapping("showSample")
-    public String showSampleByName(@RequestParam("username")String username){
-        return outputFormatService.showSampleByName(username);
+    @RequestMapping("showSampleByName")
+    public String showSampleByName(@RequestBody String message){
+        logger.info("根据用户名展示样本数据"+message);
+        JSONObject object = JSONObject.parseObject(message);
+        return outputFormatService.showSampleByName(object.getString("username"));
+    }
+
+    @RequestMapping("showSharedSample")
+    public String showSharedSample(){
+        return outputFormatService.showSharedSample();
+    }
+
+    @RequestMapping("getFaultSet")
+    public String getFaultSet(){
+       return outputFormatService.getFultSet();
     }
 }

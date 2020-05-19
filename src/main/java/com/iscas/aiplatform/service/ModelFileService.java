@@ -22,4 +22,7 @@ public interface ModelFileService {
 
     String showModelFileByName(String username);
     //根据名字检索展示模型文件
+
+    String showSharedModelFile();
+    //展示共享出来的模型文件
 }

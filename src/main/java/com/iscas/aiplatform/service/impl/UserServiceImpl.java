@@ -1,6 +1,7 @@
 package com.iscas.aiplatform.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.iscas.aiplatform.entity.Result;
 import com.iscas.aiplatform.entity.User;
 import com.iscas.aiplatform.mapper.UserMapper;
@@ -27,17 +28,22 @@ public class UserServiceImpl implements UserService {
         result.setSuccess(false);
         if (loginResult == null) {
             result.setMsg("用户名或密码错误");
+            result.setDetail(null);
         } else {
             result.setSuccess(true);
             result.setMsg("登录成功");
+            JSONObject o=new JSONObject();
+            o.put("username",username);
+            result.setDetail(o);
         }
-        result.setDetail(null);
+
         return JSON.toJSONString(result);
     }
     @Override
-    public String userRegist(User user) {
+    public String userRegist(String userString) {
 
         Result result=new Result();
+        User user = JSON.parseObject(userString, User.class);
         User user1=userMapper.findUserByName(user.getUsername());
         if(user1==null) {
             int i = userMapper.regist(user);

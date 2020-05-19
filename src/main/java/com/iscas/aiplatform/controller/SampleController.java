@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 public class SampleController {
     @Autowired
     private SampleService sampleService;
-    @RequestMapping(value = "/creatSample",method = RequestMethod.GET)
-    public void creatSample(int id){
+    @RequestMapping(value = "/createSample",method = RequestMethod.GET)
+    public void createSample(int id){
         sampleService.createSample(id);
         //System.out.println("123");
     }
     @RequestMapping(value="/stopSample",method = RequestMethod.GET)
     public void stopSample(int id){
-        sampleService.createSample(id);
+        sampleService.stopSample(id);
     }
 }

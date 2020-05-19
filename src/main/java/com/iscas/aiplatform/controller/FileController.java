@@ -1,8 +1,12 @@
 package com.iscas.aiplatform.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.iscas.aiplatform.entity.Result;
 import com.iscas.aiplatform.service.ModelFileService;
 import com.iscas.aiplatform.service.OutputFormatService;
 import com.iscas.aiplatform.utils.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +21,11 @@ import javax.servlet.http.HttpServletRequest;
  * @Description:上传文件包含两个：一个样本输出格式文件，一个模型文件
  */
 
-@Controller
+@RestController
 @CrossOrigin("*")
 public class FileController {
 
-
+   Logger logger =LoggerFactory.getLogger(getClass());
     @Autowired
     private OutputFormatService outputFormatService;
 
@@ -36,12 +40,11 @@ public class FileController {
 
     @RequestMapping(value="/testuploadimg", method = RequestMethod.POST)
     public @ResponseBody String uploadImg(@RequestParam("file") MultipartFile file,
-                     HttpServletRequest request,@RequestParam(value = "describe",defaultValue = "特高压") String describe,
-                                          @RequestParam(value = "username",defaultValue = "张三")String username,@RequestParam(value="faultSet",defaultValue = "故障A")String faultSet) {
+                     HttpServletRequest request,@RequestParam(value = "describe") String describe,
+                                          @RequestParam(value = "username")String username,@RequestParam(value="faultSet")String faultSet,@RequestParam(value="start")String start) {
+        logger.info(file.getOriginalFilename()+"/"+describe+"/"+username+"/"+faultSet+"/"+start);
         String fileName = file.getOriginalFilename();
         String filePath = "/format/"+username;
-
-        System.out.println("1111"+filePath+"11111");
 
         filePath=filePath+"/"+FileUtil.getFolderCount(filePath)+"/";
 
@@ -49,11 +52,14 @@ public class FileController {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
         } catch (Exception e) {
             // TODO: handle exception
+            logger.info("上传失败"+e.getMessage());
+            Result result=new Result("上传失败",false);
+            return JSON.toJSONString(result);
         }
         //返回json
-        outputFormatService.addOutputFormat(filePath,describe,username,faultSet);
+        return outputFormatService.addOutputFormat(filePath+"/"+fileName,describe,username,faultSet,start);
         //fileService.writeToDB(filePath,describe,username);
-        return "uploadimg success";
+
     }
 
     @RequestMapping(value="/uploadModelFile", method = RequestMethod.POST)

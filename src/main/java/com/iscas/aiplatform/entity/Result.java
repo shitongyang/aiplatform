@@ -1,5 +1,10 @@
 package com.iscas.aiplatform.entity;
 
+import com.alibaba.fastjson.JSON;
+
+import java.util.HashMap;
+
+
 /**
  * 向前端返回信息封装
  * @param <T> 可变类型
@@ -58,4 +63,20 @@ public class Result<T> {
         this.detail=detail;
     }
 
+    @Override
+    public String toString() {
+        return "Result{" +
+                "msg='" + msg + '\'' +
+                ", success=" + success +
+                ", detail=" + detail +
+                '}';
+    }
+
+    public static String jsonErrorResult(String area){
+
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("描述:","输入的数据不是json格式的字符串");
+        map.put("你输入的参数是:",area);
+        return JSON.toJSONString(map);
+    }
 }

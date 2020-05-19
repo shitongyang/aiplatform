@@ -3,8 +3,8 @@
 
 <mapper namespace="com.iscas.aiplatform.mapper.OutputFormatMapper">
 
-    <insert id="writeToOutputFormat">
-        insert into output_format(username,output_format_path,output_format_des,create_time) values(#{username},#{path},#{describe},NOW())
+    <insert id="writeToOutputFormat" useGeneratedKeys = "true" keyProperty = "id">
+        insert into output_format(username,output_format_path,output_format_des,fault_set,is_share,create_time) values(#{username},#{path},#{describe},#{faultSet},'0',NOW())
     </insert>
 
     <update id="shareSampleStatus">
@@ -18,5 +18,14 @@
     <select id="showSampleByName" resultType="java.util.Map">
         select * from output_format o where o.username=#{username}
     </select>
+
+    <select id="showSharedSample" resultType="java.util.Map">
+        select * from output_format o where o.is_share=1
+    </select>
+
+    <select id="selectFaultSet" resultType="java.util.Map">
+        select f.no,f.fault_name from fault_set f
+    </select>
+
 
 </mapper>

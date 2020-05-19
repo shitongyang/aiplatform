@@ -5,6 +5,8 @@ import com.iscas.aiplatform.entity.Result;
 import com.iscas.aiplatform.mapper.ModelFileMapper;
 import com.iscas.aiplatform.service.ModelFileService;
 import com.iscas.aiplatform.utils.JSONFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ import java.util.Map;
  */
 @Service
 public class ModelFileServiceImpl implements ModelFileService {
+
+    Logger logger= LoggerFactory.getLogger(getClass());
 
     @Autowired
     private ModelFileMapper modelFileMapper;
@@ -63,8 +67,17 @@ public class ModelFileServiceImpl implements ModelFileService {
         Result result=new Result();
         result.setSuccess(true);
         result.setMsg("访问成功");
-        result.setDetail(resultList);
+        result.setDetail(OutputFormatServiceImpl.addNo(resultList));
 
+        return JSON.toJSONString(result, JSONFilter.filter);
+    }
+
+    @Override
+    public String showSharedModelFile() {
+        List<Map<String,Object>> resultList=modelFileMapper.selectSharedModelFile();
+        //logger.info("共享模型文件");
+        //logger.info(resultList.toString());
+        Result result=new Result("访问共享模型文件成功",true,OutputFormatServiceImpl.addNo(resultList));
         return JSON.toJSONString(result, JSONFilter.filter);
     }
 

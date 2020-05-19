@@ -14,7 +14,7 @@ public interface UserService {
 
     String userLogin(String username, String password);
 
-    String userRegist(User user);
+    String userRegist(String userString);
 
 
 

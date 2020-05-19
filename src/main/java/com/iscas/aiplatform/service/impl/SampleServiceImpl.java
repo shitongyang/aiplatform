@@ -50,6 +50,7 @@ public class SampleServiceImpl implements SampleService {
             FileClient fileClient = new FileClient();
             STClient stClient = new STClient();
             Map<String, String> info = sampleMapper.getSampleInfo(id);
+            System.out.println("将要制造的数据"+info);
             String userName = info.get("username");
             String fault_set = info.get("fault_set");
             String output_format_path = info.get("output_format_path");
