@@ -50,6 +50,6 @@ public class OutputFormatController {
 
     @RequestMapping("getFaultSet")
     public String getFaultSet(){
-       return outputFormatService.getFultSet();
+       return outputFormatService.getFaultSet();
     }
 }

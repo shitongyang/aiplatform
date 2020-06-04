@@ -17,7 +17,6 @@ public class SampleController {
     @RequestMapping(value = "/createSample",method = RequestMethod.GET)
     public void createSample(int id){
         sampleService.createSample(id);
-        //System.out.println("123");
     }
     @RequestMapping(value="/stopSample",method = RequestMethod.GET)
     public void stopSample(int id){

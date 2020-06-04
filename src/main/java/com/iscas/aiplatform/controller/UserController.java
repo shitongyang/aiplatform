@@ -44,6 +44,6 @@ public class UserController {
             System.out.println("前端传过来的参数不符合json格式");
             return Result.jsonErrorResult(userString);
         }
-        return userService.userRegist(userString);
+        return userService.userRegister(userString);
     }
 }

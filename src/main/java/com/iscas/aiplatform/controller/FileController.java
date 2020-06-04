@@ -34,14 +34,13 @@ public class FileController {
 
     @RequestMapping(value="/gouploadimg", method = RequestMethod.GET)
     public String goUploadImg() {
-        //跳转到 templates 目录下的 uploadimg.html
+        // 跳转到 templates 目录下的 uploadimg.html
         return "uploadimg";
     }
 
     @RequestMapping(value="/testuploadimg", method = RequestMethod.POST)
     public @ResponseBody String uploadImg(@RequestParam("file") MultipartFile file,
-                     HttpServletRequest request,@RequestParam(value = "describe") String describe,
-                                          @RequestParam(value = "username")String username,@RequestParam(value="faultSet")String faultSet,@RequestParam(value="start")String start) {
+                                          HttpServletRequest request,@RequestParam(value = "describe") String describe, @RequestParam(value = "username")String username,@RequestParam(value="faultSet")String faultSet,@RequestParam(value="start")String start) {
         logger.info(file.getOriginalFilename()+"/"+describe+"/"+username+"/"+faultSet+"/"+start);
         String fileName = file.getOriginalFilename();
         String filePath = "/format/"+username;
@@ -52,23 +51,21 @@ public class FileController {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
         } catch (Exception e) {
             // TODO: handle exception
-            logger.info("上传失败"+e.getMessage());
-            Result result=new Result("上传失败",false);
+            logger.info("上传样本输出格式文件失败"+e.getMessage());
+            Result result=new Result("上传样本输出格式文件失败",false);
             return JSON.toJSONString(result);
         }
-        //返回json
+        // 返回json
         return outputFormatService.addOutputFormat(filePath+"/"+fileName,describe,username,faultSet,start);
-        //fileService.writeToDB(filePath,describe,username);
+        // fileService.writeToDB(filePath,describe,username);
 
     }
 
     @RequestMapping(value="/uploadModelFile", method = RequestMethod.POST)
-    public @ResponseBody String uploadModelFile(@RequestParam("file") MultipartFile file, HttpServletRequest request,@RequestParam(value = "modelName",defaultValue = "模型A") String modelName,
-                                  @RequestParam(value = "modelDes",defaultValue = "用来预测电压的大小")String modelDes,@RequestParam(value = "modelFormat",defaultValue = "h5")String modelFormat,@RequestParam(value = "username",defaultValue = "李四")String username){
+    public @ResponseBody String uploadModelFile(@RequestParam("file") MultipartFile file,@RequestParam(value = "modelName",defaultValue = "默认值") String modelName,
+                                  @RequestParam(value = "modelDes",defaultValue = "默认值")String modelDes,@RequestParam(value = "modelFormat",defaultValue = "默认值")String modelFormat,@RequestParam(value = "username",defaultValue = "默认值")String username){
         String fileName = file.getOriginalFilename();
         String filePath = "/model_file/"+username;
-
-        System.out.println("1111"+filePath+"11111");
 
         filePath=filePath+"/"+FileUtil.getFolderCount(filePath)+"/";
 
@@ -76,8 +73,11 @@ public class FileController {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
         } catch (Exception e) {
             // TODO: handle exception
+            logger.info("上传模型文件失败"+e.getMessage());
+            Result result=new Result("上传模型文件失败",false);
+            return JSON.toJSONString(result);
         }
-        modelFileService.addModelFile(modelName,modelDes,modelFormat,username,filePath);
-        return "upload model_file success!";
+        modelFileService.addModelFile(modelName, modelDes, modelFormat, username, filePath);
+        return JSON.toJSONString(new Result("上传模型文件成功", true));
     }
 }

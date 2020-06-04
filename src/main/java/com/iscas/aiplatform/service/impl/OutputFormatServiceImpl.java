@@ -33,8 +33,8 @@ public class OutputFormatServiceImpl implements OutputFormatService {
     private SampleService sampleService;
     @Override
     public String shareSample(int id) {
-        Result result=new Result();
-        if(outputFormatMapper.shareSampleStatus(id)==1){
+        Result result = new Result();
+        if(outputFormatMapper.shareSampleStatus(id) == 1){
             result.setSuccess(true);
             result.setMsg("共享成功");
         }
@@ -47,8 +47,8 @@ public class OutputFormatServiceImpl implements OutputFormatService {
 
     @Override
     public String cancelShareSample(int id) {
-        Result result=new Result();
-        if(outputFormatMapper.cancelShareSampleStatus(id)==1){
+        Result result = new Result();
+        if(outputFormatMapper.cancelShareSampleStatus(id) == 1){
             result.setSuccess(true);
             result.setMsg("取消共享成功");
         }
@@ -61,14 +61,12 @@ public class OutputFormatServiceImpl implements OutputFormatService {
 
     @Override
     public String addOutputFormat(String path, String describe, String username, String faultSet,String start) {
-
-
-        String faultSets[]=faultSet.split(",");
-        for(String s:faultSets){
-            OutPutFormat outputFormat=new OutPutFormat(username,path,describe,s);
-           outputFormatMapper.writeToOutputFormat(outputFormat);
+        String[] faultSets = faultSet.split(",");
+        for (String s:faultSets){
+            OutPutFormat outputFormat=new OutPutFormat(username, path, describe, s);
+            outputFormatMapper.writeToOutputFormat(outputFormat);
             System.out.println("插入之后返回的id是"+outputFormat.getId());
-            if("true".equals(start)){
+            if ("true".equals(start)){
                 System.out.println("启动样本制造");
                 sampleService.createSample(outputFormat.getId());
             }
@@ -87,28 +85,29 @@ public class OutputFormatServiceImpl implements OutputFormatService {
 
     @Override
     public String showSharedSample() {
-        List<Map<String,Object>> list=outputFormatMapper.showSharedSample();
-        Result result= new Result("访问成功",true,addNo(list));
+        List<Map<String,Object>> list = outputFormatMapper.showSharedSample();
+        Result result = new Result("访问成功",true,addNo(list));
         return JSON.toJSONString(result, JSONFilter.filter);
     }
 
     @Override
-    public String getFultSet() {
-        List<Map<String,Object>> list=outputFormatMapper.selectFaultSet();
-        Result result= new Result("访问故障集成功",true,list);
+    public String getFaultSet() {
+        List<Map<String,Object>> list = outputFormatMapper.selectFaultSet();
+        Result result = new Result("访问故障集成功",true,list);
         return JSON.toJSONString(result);
     }
 
-    public static List addNo(List parmList){
+    public static List addNo(List paramList){
         /*
         * 加上排列序号
         * 修改is_share字段为布尔类型
         * */
-        List<Map<String,Object>> list=parmList;
-        int i=1;
+        List<Map<String,Object>> list = paramList;
+        int no = 1;
+        // 为前端展示加序号
         for (Map m:list) {
-            m.put("no",i++);
-            m.put("is_share",m.get("is_share").equals("0")?false:true);
+            m.put("no",no++);
+            m.put("is_share","0".equals(m.get("is_share"))?false:true);
         }
         return list;
     }

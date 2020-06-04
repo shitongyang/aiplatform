@@ -2,7 +2,6 @@ package com.iscas.aiplatform.mapper;
 
 import com.iscas.aiplatform.entity.OutPutFormat;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

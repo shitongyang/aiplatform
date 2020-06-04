@@ -5,11 +5,15 @@ import com.iscas.aiplatform.entity.Result;
 import com.iscas.aiplatform.mapper.ModelFileMapper;
 import com.iscas.aiplatform.service.ModelFileService;
 import com.iscas.aiplatform.utils.JSONFilter;
+import com.iscas.aiplatform.utils.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,13 +33,16 @@ public class ModelFileServiceImpl implements ModelFileService {
 
     @Override
     public int addModelFile(String modelName, String modelDes, String modelFormat, String username, String modelStorePath) {
-        return modelFileMapper.insertModelFile(modelName,modelDes,modelFormat,username,modelStorePath);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date=new Date();
+        String time=sdf.format(date);
+        return modelFileMapper.insertModelFile(modelName, modelDes, modelFormat, username, modelStorePath, time);
     }
 
     @Override
     public String shareModelFile(int id) {
-        Result result=new Result();
-        if(modelFileMapper.shareModelFile(id)==1){
+        Result result = new Result();
+        if(modelFileMapper.shareModelFile(id) == 1){
             result.setSuccess(true);
             result.setMsg("共享成功");
         }
@@ -48,8 +55,8 @@ public class ModelFileServiceImpl implements ModelFileService {
 
     @Override
     public String cancelShareModelFile(int id) {
-        Result result=new Result();
-        if(modelFileMapper.cancelShareModelFile(id)==1){
+        Result result = new Result();
+        if (modelFileMapper.cancelShareModelFile(id) == 1){
            result.setSuccess(true);
            result.setMsg("取消共享成功");
         }
@@ -63,8 +70,8 @@ public class ModelFileServiceImpl implements ModelFileService {
     @Override
     public String showModelFileByName(String username) {
 
-        List<Map<String,Object>> resultList=modelFileMapper.selectModelFileByName(username);
-        Result result=new Result();
+        List<Map<String,Object>> resultList = modelFileMapper.selectModelFileByName(username);
+        Result result = new Result();
         result.setSuccess(true);
         result.setMsg("访问成功");
         result.setDetail(OutputFormatServiceImpl.addNo(resultList));
@@ -74,11 +81,16 @@ public class ModelFileServiceImpl implements ModelFileService {
 
     @Override
     public String showSharedModelFile() {
-        List<Map<String,Object>> resultList=modelFileMapper.selectSharedModelFile();
-        //logger.info("共享模型文件");
-        //logger.info(resultList.toString());
-        Result result=new Result("访问共享模型文件成功",true,OutputFormatServiceImpl.addNo(resultList));
+        List<Map<String,Object>> resultList = modelFileMapper.selectSharedModelFile();
+        Result result = new Result("访问共享模型文件成功",true,OutputFormatServiceImpl.addNo(resultList));
         return JSON.toJSONString(result, JSONFilter.filter);
+    }
+
+    @Override
+    public String getModelFormat() {
+
+        List<Map<String,Object>> resultList = modelFileMapper.selectModelFormat();
+        return JSON.toJSONString(new Result("获取成功",true,resultList));
     }
 
 }

@@ -9,20 +9,20 @@ package com.iscas.aiplatform.service;
 
 public interface OutputFormatService {
     String shareSample(int id);
-    //分享样本数据
+    // 分享样本数据
 
     String cancelShareSample(int id);
-    //取消分享样本数据
+    // 取消分享样本数据
 
     String addOutputFormat(String path,String describe,String username,String faultSet,String start);
-    //向样本输出格式表里添加记录
+    // 向样本输出格式表里添加记录
 
     String showSampleByName(String username);
-    //根据用户名字展示样本数据
+    // 根据用户名字展示样本数据
 
     String showSharedSample();
-    //展示共享的样本数据
+    // 展示共享的样本数据
 
-    String getFultSet();
-    //获取故障集
+    String getFaultSet();
+    // 获取故障集
 }

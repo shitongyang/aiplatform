@@ -12,10 +12,21 @@ import com.iscas.aiplatform.entity.User;
 
 public interface UserService {
 
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     */
     String userLogin(String username, String password);
 
-    String userRegist(String userString);
 
-
+    /**
+     *
+     * @param userString
+     * @return
+     */
+    String userRegister(String userString);
+ 
 
 }

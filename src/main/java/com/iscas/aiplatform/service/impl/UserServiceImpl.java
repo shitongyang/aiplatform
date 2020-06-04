@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         return JSON.toJSONString(result);
     }
     @Override
-    public String userRegist(String userString) {
+    public String userRegister(String userString) {
 
         Result result=new Result();
         User user = JSON.parseObject(userString, User.class);

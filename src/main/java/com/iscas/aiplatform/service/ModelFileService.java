@@ -1,8 +1,5 @@
 package com.iscas.aiplatform.service;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * @Author yangshitong
  * @Date 2020/5/12 13:43
@@ -14,15 +11,24 @@ public interface ModelFileService {
 
     int addModelFile(String modelName,String modelDes,String modelFormat,String username,String modelStorePath);
 
+    /**
+     * author: yangshitong
+     * description: 通过模型文件的id进行分享
+     * @params int id
+     * @date 2020/6/4 9:54
+     * @return
+     */
     String shareModelFile(int id);
-    //分享模型文件
 
     String cancelShareModelFile(int id);
-    //取消分享模型文件
+    // 取消分享模型文件
 
     String showModelFileByName(String username);
-    //根据名字检索展示模型文件
+    // 根据名字检索展示模型文件
 
     String showSharedModelFile();
-    //展示共享出来的模型文件
+    // 展示共享出来的模型文件
+
+    String getModelFormat();
+    // 获取模型格式列表
 }

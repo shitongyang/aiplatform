@@ -51,13 +51,19 @@ public class ModelFileController {
     }
     @RequestMapping("showSharedModelFile")
     public String showSharedModelFile(){
-        //JSONObject object = JSONObject.parseObject(message);
+        // JSONObject object = JSONObject.parseObject(message);
         return modelFileService.showSharedModelFile();
+    }
+
+    @RequestMapping("getModelFormat")
+    public String getModelFormat(){
+        // JSONObject object = JSONObject.parseObject(message);
+        return modelFileService.getModelFormat();
     }
 
     @RequestMapping("insert")
     public String insert(){
-        //JSONObject object = JSONObject.parseObject(message);
+        // JSONObject object = JSONObject.parseObject(message);
         int i=modelFileService.addModelFile("1","1","1","1","1");
         return "测试陈宫"+i;
     }

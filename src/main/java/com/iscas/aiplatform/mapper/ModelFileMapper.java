@@ -17,8 +17,7 @@ import java.util.Map;
 @Component
 public interface ModelFileMapper {
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    int insertModelFile(String modelName,String modelDes,String modelFormat,String username,String modelStorePath);
+    int insertModelFile(String modelName, String modelDes, String modelFormat, String username, String modelStorePath, String time);
     //插入一条模型文件记录
 
     int shareModelFile(int id);
@@ -32,4 +31,7 @@ public interface ModelFileMapper {
 
     List<Map<String,Object>> selectSharedModelFile();
     //展示样本文件根据名字检索
+
+    List<Map<String,Object>> selectModelFormat();
+    //获取模型文件格式列表
 }

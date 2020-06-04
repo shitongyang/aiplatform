@@ -6,7 +6,7 @@
 <mapper namespace="com.iscas.aiplatform.mapper.ModelFileMapper">
 
     <insert id="insertModelFile" >
-        insert into model_file(model_name,model_des,model_format,is_share,username,model_store_path,update_time) values(#{modelName},#{modelDes},#{modelFormat},0,#{username},#{modelStorePath},NOW())
+        insert into model_file(model_name,model_des,model_format,is_share,username,model_store_path,update_time) values(#{modelName},#{modelDes},#{modelFormat},0,#{username},#{modelStorePath},#{time})
     </insert>
 
     <update id="shareModelFile">
@@ -23,6 +23,10 @@
 
     <select id="selectSharedModelFile" resultType="java.util.Map">
        select * from model_file m where m.is_share=1
+    </select>
+
+    <select id="selectModelFormat" resultType="java.util.Map">
+       select m.no,m.format_name from model_format m
     </select>
 
 </mapper>
