@@ -31,4 +31,14 @@ public interface ModelFileService {
 
     String getModelFormat();
     // 获取模型格式列表
+
+    /**
+     * author: YangShiTong
+     * description: 删除某一模型文件 逻辑删除
+     * @params
+     * @date 2020/6/18 15:30
+     * @return
+     */
+    String deleteModelFile(int id);
+
 }

@@ -33,4 +33,6 @@ public interface OutputFormatMapper {
 
     List<Map<String,Object>> selectFaultSet();
 
+    int deleteOutputFormat(int id);
+
 }

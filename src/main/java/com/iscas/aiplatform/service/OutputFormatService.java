@@ -25,4 +25,6 @@ public interface OutputFormatService {
 
     String getFaultSet();
     // 获取故障集
+
+    String deleteOutputFormat(int id);
 }

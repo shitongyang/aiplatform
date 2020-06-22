@@ -52,4 +52,10 @@ public class OutputFormatController {
     public String getFaultSet(){
        return outputFormatService.getFaultSet();
     }
+
+    @DeleteMapping("deleteOutputFormat")
+    public String deleteOutputFormat(@RequestParam("id") int id){
+        return outputFormatService.deleteOutputFormat(id);
+    }
+
 }

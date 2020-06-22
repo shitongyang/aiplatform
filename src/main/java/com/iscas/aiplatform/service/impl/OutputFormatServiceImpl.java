@@ -97,6 +97,7 @@ public class OutputFormatServiceImpl implements OutputFormatService {
         return JSON.toJSONString(result);
     }
 
+
     public static List addNo(List paramList){
         /*
         * 加上排列序号
@@ -107,8 +108,23 @@ public class OutputFormatServiceImpl implements OutputFormatService {
         // 为前端展示加序号
         for (Map m:list) {
             m.put("no",no++);
-            m.put("is_share","0".equals(m.get("is_share"))?false:true);
+           // m.put("is_share","0".equals(m.get("is_share"))?false:true);
         }
         return list;
     }
+
+    @Override
+    public String deleteOutputFormat(int id) {
+        Result result = new Result();
+        if(outputFormatMapper.deleteOutputFormat(id) == 1){
+            result.setSuccess(true);
+            result.setMsg("删除样本输出格式文件成功");
+        }
+        else {
+            result.setSuccess(false);
+            result.setMsg("删除样本输出格式文件失败");
+        }
+        return JSON.toJSONString(result);
+    }
+
 }

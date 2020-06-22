@@ -1,9 +1,6 @@
 package com.iscas.aiplatform.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.serializer.ValueFilter;
 import com.iscas.aiplatform.service.ModelFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +63,11 @@ public class ModelFileController {
         // JSONObject object = JSONObject.parseObject(message);
         int i=modelFileService.addModelFile("1","1","1","1","1");
         return "测试陈宫"+i;
+    }
+
+    @DeleteMapping("deleteModelFile")
+    public String deleteModelFile(@RequestParam("id") int id){
+        return modelFileService.deleteModelFile(id);
     }
 
 

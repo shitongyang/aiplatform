@@ -13,16 +13,20 @@
         update model_file set is_share=1 where id=#{id}
     </update>
 
+    <update id="deleteModelFile">
+        update model_file set is_deleted=1 where id=#{id}
+    </update>
+
     <update id="cancelShareModelFile">
         update model_file set is_share=0 where id=#{id}
     </update>
 
     <select id="selectModelFileByName" resultType="java.util.Map">
-       select * from model_file m where m.username=#{username}
+       select * from model_file m where m.username=#{username} and m.is_deleted = 0
     </select>
 
     <select id="selectSharedModelFile" resultType="java.util.Map">
-       select * from model_file m where m.is_share=1
+       select * from model_file m where m.is_share = 1 and m.is_deleted = 0
     </select>
 
     <select id="selectModelFormat" resultType="java.util.Map">

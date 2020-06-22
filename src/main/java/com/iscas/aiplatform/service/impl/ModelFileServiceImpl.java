@@ -71,6 +71,7 @@ public class ModelFileServiceImpl implements ModelFileService {
     public String showModelFileByName(String username) {
 
         List<Map<String,Object>> resultList = modelFileMapper.selectModelFileByName(username);
+
         Result result = new Result();
         result.setSuccess(true);
         result.setMsg("访问成功");
@@ -91,6 +92,19 @@ public class ModelFileServiceImpl implements ModelFileService {
 
         List<Map<String,Object>> resultList = modelFileMapper.selectModelFormat();
         return JSON.toJSONString(new Result("获取成功",true,resultList));
+    }
+
+    @Override
+    public String deleteModelFile(int id) {
+        Result result = new Result();
+        if(modelFileMapper.deleteModelFile(id) == 1){
+            result.setSuccess(true);
+            result.setMsg("删除模型文件成功");
+        }else {
+            result.setSuccess(false);
+            result.setMsg("删除模型文件失败");
+        }
+        return JSON.toJSONString(result);
     }
 
 }

@@ -34,4 +34,8 @@ public interface ModelFileMapper {
 
     List<Map<String,Object>> selectModelFormat();
     //获取模型文件格式列表
+
+
+    int deleteModelFile(int id);
+    //删除模型文件  逻辑删除
 }
