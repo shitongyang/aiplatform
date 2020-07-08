@@ -22,4 +22,6 @@ public class SampleController {
     public void stopSample(int id){
         sampleService.stopSample(id);
     }
+
+
 }

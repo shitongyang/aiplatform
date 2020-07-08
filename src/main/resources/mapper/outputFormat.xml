@@ -4,7 +4,7 @@
 <mapper namespace="com.iscas.aiplatform.mapper.OutputFormatMapper">
 
     <insert id="writeToOutputFormat" useGeneratedKeys = "true" keyProperty = "id">
-        insert into output_format(username,output_format_path,output_format_des,fault_set,is_share,create_time) values(#{username},#{path},#{describe},#{faultSet},'0',NOW())
+        insert into output_format(username,output_format_path,output_format_des,fault_set,is_share,is_deleted,create_time) values(#{username},#{path},#{describe},#{faultSet},0,0,NOW())
     </insert>
 
     <update id="shareSampleStatus">
@@ -16,11 +16,11 @@
     </update>
 
     <select id="showSampleByName" resultType="java.util.Map">
-        select o.id,o.username,o.output_format_des,o.is_share,f.fault_name as 'fault_set' from output_format o,fault_set f where o.username=#{username} and o.is_deleted = 0 and o.fault_set=f.`no`
+        select o.id,o.username,date_format(o.create_time,'%Y-%m-%d %k:%i')as create_time,o.output_format_des,o.is_share,f.fault_name as 'fault_set' from output_format o,fault_set f where o.username=#{username} and o.is_deleted = 0 and o.fault_set=f.`no`
     </select>
 
     <select id="showSharedSample" resultType="java.util.Map">
-        select o.id,o.username,o.output_format_des,o.is_share ,f.fault_name as 'fault_set' from output_format o,fault_set f where o.is_share=1 and o.is_deleted = 0 and o.fault_set=f.`no`
+        select o.id,o.username,date_format(o.create_time,'%Y-%m-%d %k:%i')as create_time,o.output_format_des,o.is_share ,f.fault_name as 'fault_set' from output_format o,fault_set f where o.is_share=1 and o.is_deleted = 0 and o.fault_set=f.`no`
     </select>
 
     <select id="selectFaultSet" resultType="java.util.Map">
@@ -31,5 +31,8 @@
         update output_format set is_deleted=1 where id=#{id}
     </update>
 
+    <select id="listOutputFormatDes" resultType="java.util.Map">
+      select DISTINCT o.output_format_des from output_format o where o.username=#{username} and o.is_deleted = 0
+    </select>
 
 </mapper>

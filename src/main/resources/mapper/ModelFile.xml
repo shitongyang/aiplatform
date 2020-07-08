@@ -6,7 +6,7 @@
 <mapper namespace="com.iscas.aiplatform.mapper.ModelFileMapper">
 
     <insert id="insertModelFile" >
-        insert into model_file(model_name,model_des,model_format,is_share,username,model_store_path,update_time) values(#{modelName},#{modelDes},#{modelFormat},0,#{username},#{modelStorePath},#{time})
+        insert into model_file(model_name,model_des,model_format,is_share,is_deleted,username,model_store_path,update_time,create_time) values(#{modelName},#{modelDes},#{modelFormat},0,0,#{username},#{modelStorePath},#{time},#{time})
     </insert>
 
     <update id="shareModelFile">

@@ -25,7 +25,7 @@ public interface SampleService {
      * @auther: lvxianjin
      * @date: 2020/5/11 8:58
      */
-    public void createSample(int id);
+    void createSample(int id);
     /**
      *
      * 功能描述: 停止线程
@@ -35,5 +35,5 @@ public interface SampleService {
      * @auther: lvxianjin
      * @date: 2020/5/11 13:48
      */
-    public void stopSample(int id);
+    void stopSample(int id);
 }

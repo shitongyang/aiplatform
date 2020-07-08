@@ -8,4 +8,14 @@ package com.iscas.aiplatform.service;
  */
 
 public interface ModelRunService {
+    
+    /**
+     * author: YangShiTong
+     * description: 进行模型的部署
+     * @params
+     * @date 2020/6/28 15:22
+     * @return 
+     */
+    void deployment();
+    
 }

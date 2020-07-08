@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.iscas.aiplatform.entity.Result;
 import com.iscas.aiplatform.mapper.ModelFileMapper;
 import com.iscas.aiplatform.service.ModelFileService;
+import com.iscas.aiplatform.utils.AddNoUtil;
 import com.iscas.aiplatform.utils.JSONFilter;
 import com.iscas.aiplatform.utils.TimeUtil;
 import org.slf4j.Logger;
@@ -33,9 +34,7 @@ public class ModelFileServiceImpl implements ModelFileService {
 
     @Override
     public int addModelFile(String modelName, String modelDes, String modelFormat, String username, String modelStorePath) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Date date=new Date();
-        String time=sdf.format(date);
+        String time = TimeUtil.getCurrentTime();
         return modelFileMapper.insertModelFile(modelName, modelDes, modelFormat, username, modelStorePath, time);
     }
 
@@ -75,7 +74,7 @@ public class ModelFileServiceImpl implements ModelFileService {
         Result result = new Result();
         result.setSuccess(true);
         result.setMsg("访问成功");
-        result.setDetail(OutputFormatServiceImpl.addNo(resultList));
+        result.setDetail(AddNoUtil.addNo(resultList));
 
         return JSON.toJSONString(result, JSONFilter.filter);
     }
@@ -83,7 +82,7 @@ public class ModelFileServiceImpl implements ModelFileService {
     @Override
     public String showSharedModelFile() {
         List<Map<String,Object>> resultList = modelFileMapper.selectSharedModelFile();
-        Result result = new Result("访问共享模型文件成功",true,OutputFormatServiceImpl.addNo(resultList));
+        Result result = new Result("访问共享模型文件成功",true,AddNoUtil.addNo(resultList));
         return JSON.toJSONString(result, JSONFilter.filter);
     }
 

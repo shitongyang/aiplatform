@@ -6,6 +6,7 @@ import com.iscas.aiplatform.entity.Result;
 import com.iscas.aiplatform.mapper.OutputFormatMapper;
 import com.iscas.aiplatform.service.OutputFormatService;
 import com.iscas.aiplatform.service.SampleService;
+import com.iscas.aiplatform.utils.AddNoUtil;
 import com.iscas.aiplatform.utils.JSONFilter;
 
 import org.slf4j.Logger;
@@ -79,14 +80,14 @@ public class OutputFormatServiceImpl implements OutputFormatService {
     @Override
     public String showSampleByName(String username) {
         List<Map<String,Object>> list=outputFormatMapper.showSampleByName(username);
-        Result result= new Result("访问成功",true,addNo(list));
+        Result result= new Result("访问成功",true,AddNoUtil.addNo(list));
         return JSON.toJSONString(result, JSONFilter.filter);
     }
 
     @Override
     public String showSharedSample() {
         List<Map<String,Object>> list = outputFormatMapper.showSharedSample();
-        Result result = new Result("访问成功",true,addNo(list));
+        Result result = new Result("访问成功",true, AddNoUtil.addNo(list));
         return JSON.toJSONString(result, JSONFilter.filter);
     }
 
@@ -97,34 +98,23 @@ public class OutputFormatServiceImpl implements OutputFormatService {
         return JSON.toJSONString(result);
     }
 
-
-    public static List addNo(List paramList){
-        /*
-        * 加上排列序号
-        * 修改is_share字段为布尔类型
-        * */
-        List<Map<String,Object>> list = paramList;
-        int no = 1;
-        // 为前端展示加序号
-        for (Map m:list) {
-            m.put("no",no++);
-           // m.put("is_share","0".equals(m.get("is_share"))?false:true);
-        }
-        return list;
-    }
-
     @Override
     public String deleteOutputFormat(int id) {
         Result result = new Result();
         if(outputFormatMapper.deleteOutputFormat(id) == 1){
             result.setSuccess(true);
-            result.setMsg("删除样本输出格式文件成功");
+            result.setMsg("删除成功");
         }
         else {
             result.setSuccess(false);
-            result.setMsg("删除样本输出格式文件失败");
+            result.setMsg("删除失败");
         }
         return JSON.toJSONString(result);
+    }
+
+    @Override
+    public List<Map<String,Object>> listOutputFormatDes(String username) {
+        return outputFormatMapper.listOutputFormatDes(username);
     }
 
 }

@@ -39,6 +39,7 @@ public class UserServiceImpl implements UserService {
 
         return JSON.toJSONString(result);
     }
+
     @Override
     public String userRegister(String userString) {
 

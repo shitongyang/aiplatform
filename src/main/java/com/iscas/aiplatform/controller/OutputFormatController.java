@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Author yangshitong
  * @Date 2020/5/12 15:31
@@ -58,4 +61,21 @@ public class OutputFormatController {
         return outputFormatService.deleteOutputFormat(id);
     }
 
+    @DeleteMapping("deleteSample")
+    public String deleteSample(@RequestParam("id") int id){
+        return outputFormatService.deleteOutputFormat(id);
+    }
+
+    @GetMapping("showOutputFormatByName")
+    public String showOutputFormatName(@RequestParam String username){
+        logger.info("根据用户名展示样本输出格式"+username);
+        //JSONObject object = JSONObject.parseObject(message);
+        return outputFormatService.showSampleByName(username);
+    }
+
+
+    @GetMapping("/getOutputFormatDes")
+    public List<Map<String,Object>> getOutputFormatDes(@RequestParam String username){
+        return outputFormatService.listOutputFormatDes(username);
+    }
 }

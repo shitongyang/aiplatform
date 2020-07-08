@@ -1,5 +1,8 @@
 package com.iscas.aiplatform.service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Author yangshitong
  * @Date 2020/5/12 14:52
@@ -27,4 +30,13 @@ public interface OutputFormatService {
     // 获取故障集
 
     String deleteOutputFormat(int id);
+
+    /**
+     * author: YangShiTong
+     * description: 列出用户的样本输出格式的藐视
+     * @param username 用户名
+     * @date 2020/7/2 17:16
+     * @return
+     */
+    List<Map<String,Object>> listOutputFormatDes(String username);
 }

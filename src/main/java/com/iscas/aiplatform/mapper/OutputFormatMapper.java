@@ -35,4 +35,6 @@ public interface OutputFormatMapper {
 
     int deleteOutputFormat(int id);
 
+    List<Map<String,Object>> listOutputFormatDes(String username);
+
 }
