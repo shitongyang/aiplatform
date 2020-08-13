@@ -81,7 +81,7 @@ public interface TrainService {
     /**
      * author: YangShiTong
      * description: 根据用户名获取实例
-     * @param
+     * @param username
      * @date 2020/7/8 11:45
      * @return
      */

@@ -1,7 +1,5 @@
 package com.iscas.aiplatform.service;
 
-import java.util.List;
-
 /**
  * @author : lvxianjin
  * @Date: 2020/5/11 08:58
