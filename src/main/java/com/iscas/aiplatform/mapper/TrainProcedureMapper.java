@@ -21,7 +21,7 @@ public interface TrainProcedureMapper {
 
     /**
      * author: YangShiTong
-     * description: 将训练程序插入数据库
+     * description: 保存训练程序到数据库
      * @param trainProcedure 实体类
      * @date 2020/6/30 19:17
      * @return
@@ -42,10 +42,6 @@ public interface TrainProcedureMapper {
     List<Map<String, Object>> listProceduresName(String username);
 
     List<Map<String, Object>> listFaultsByDes(String formatDes, String username);
-
-    int insertTrainInstance(TrainInstance trainInstance);
-
-    List<Map<String, Object>> listInstances(String username);
 
 
 }

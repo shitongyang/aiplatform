@@ -7,11 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-
-import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValue;
-
 /**
  * @Author yangshitong
  * @Date 2020/5/12 14:01
@@ -23,6 +18,7 @@ import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValu
 public class ModelFileController {
 
     Logger logger= LoggerFactory.getLogger(getClass());
+
     @Autowired
     private ModelFileService modelFileService;
 
@@ -48,19 +44,16 @@ public class ModelFileController {
     }
     @RequestMapping("showSharedModelFile")
     public String showSharedModelFile(){
-        // JSONObject object = JSONObject.parseObject(message);
         return modelFileService.showSharedModelFile();
     }
 
     @RequestMapping("getModelFormat")
     public String getModelFormat(){
-        // JSONObject object = JSONObject.parseObject(message);
         return modelFileService.getModelFormat();
     }
 
     @RequestMapping("insert")
     public String insert(){
-        // JSONObject object = JSONObject.parseObject(message);
         int i=modelFileService.addModelFile("1","1","1","1","1");
         return "测试陈宫"+i;
     }

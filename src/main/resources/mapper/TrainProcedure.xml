@@ -2,8 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iscas.aiplatform.mapper.TrainProcedureMapper">
 
-
-
     <insert id="insertTrainProcedure" parameterType="com.iscas.aiplatform.entity.TrainProcedure">
         insert into train_procedure(procedure_name,procedure_des,procedure_path,exeute_script_path,notes,username,create_time)
         values(#{procedureName},#{procedureDes},#{procedurePath},#{scriptPath},#{notes},#{username},#{createTime})
@@ -24,13 +22,5 @@
     <select id="listFaultsByDes" parameterType="String" resultType="java.util.Map">
     select DISTINCT o.fault_set from output_format o where o.username = #{username} and o.output_format_des = #{formatDes} and o.is_deleted = 0
     </select>
-
-    <insert id="insertTrainInstance" parameterType="com.iscas.aiplatform.entity.TrainInstance">
-        insert into train_instance(instance_name,status,train_procedure_id,output_format_des,fault_sets,sample_start_time,sample_end_time,train_output_path,is_distributed,compute_nodes,instance_des,run_time,create_time,username)
-        values(#{instanceName},#{status},#{trainProcedureId},#{outputFormatDes},#{faultSets},#{sampleStartTime},#{sampleEndTime},#{trainOutputPath},#{isDistributed},#{computeNodes},#{instanceDes},#{runTime},#{createTime},#{username})
-    </insert>
-
-    <select id="listInstances" parameterType="String" resultType="java.util.Map">
-     select t.instance_name,t.status,t.is_distributed,t.run_time,t.create_time,t.instance_des from train_instance t where t.username=#{username}    </select>
 
 </mapper>

@@ -1,14 +1,21 @@
 package com.iscas.aiplatform.entity;
 
 import com.alibaba.fastjson.JSON;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 
 
 /**
+ * @Author yangshitong
  * 向前端返回信息封装
  * @param <T> 可变类型
  */
+@Getter
+@Setter
+@AllArgsConstructor
 public class Result<T> {
     /**
      * 返回信息
@@ -25,29 +32,6 @@ public class Result<T> {
      */
     private T detail;
 
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public T getDetail() {
-        return detail;
-    }
-
-    public void setDetail(T detail) {
-        this.detail = detail;
-    }
 
    public Result(String msg,boolean success){
       this.msg=msg;
@@ -56,11 +40,6 @@ public class Result<T> {
 
     public Result(){
 
-    }
-    public Result(String msg,boolean success,T detail){
-        this.msg=msg;
-        this.success=success;
-        this.detail=detail;
     }
 
     @Override

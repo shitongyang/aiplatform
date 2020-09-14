@@ -5,7 +5,7 @@ import com.iscas.aiplatform.entity.Result;
 import com.iscas.aiplatform.entity.TrainProcedure;
 import com.iscas.aiplatform.service.ModelFileService;
 import com.iscas.aiplatform.service.OutputFormatService;
-import com.iscas.aiplatform.service.TrainService;
+import com.iscas.aiplatform.service.TrainProcedureService;
 import com.iscas.aiplatform.utils.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class FileController {
     private ModelFileService modelFileService;
 
     @Autowired
-    private TrainService trainService;
+    private TrainProcedureService trainService;
 
     @RequestMapping(value="/gouploadimg", method = RequestMethod.GET)
     public String goUploadImg() {
@@ -42,9 +42,10 @@ public class FileController {
         return "uploadimg";
     }
 
-    @RequestMapping(value="/testuploadimg", method = RequestMethod.POST)
+    @PostMapping(value="/testuploadimg")
     public @ResponseBody String uploadImg(@RequestParam("file") MultipartFile file,
-                                          HttpServletRequest request,@RequestParam(value = "describe") String describe, @RequestParam(value = "username")String username,@RequestParam(value="faultSet")String faultSet,@RequestParam(value="start")String start) {
+                                          HttpServletRequest request,@RequestParam(value = "describe") String describe, @RequestParam(value = "username")String username,
+                                          @RequestParam(value="faultSet")String faultSet,@RequestParam(value="start")String start) {
         logger.info(file.getOriginalFilename()+"/"+describe+"/"+username+"/"+faultSet+"/"+start);
         String fileName = file.getOriginalFilename();
         String filePath = "/format/"+username;
@@ -65,20 +66,20 @@ public class FileController {
 
     }
 
-    @RequestMapping(value="/uploadModelFile", method = RequestMethod.POST)
+    @PostMapping(value="/uploadModelFile")
     public @ResponseBody String uploadModelFile(@RequestParam("file") MultipartFile file,@RequestParam(value = "modelName",defaultValue = "默认值") String modelName,
                                   @RequestParam(value = "modelDes",defaultValue = "默认值")String modelDes,@RequestParam(value = "modelFormat",defaultValue = "默认值")String modelFormat,@RequestParam(value = "username",defaultValue = "默认值")String username){
         String fileName = file.getOriginalFilename();
         String filePath = "/model_file/"+username;
 
-        filePath=filePath+"/"+FileUtil.getFolderCount(filePath)+"/";
+        filePath = filePath + "/" + FileUtil.getFolderCount(filePath) + "/";
 
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
         } catch (Exception e) {
             // TODO: handle exception
             logger.info("上传模型文件失败"+e.getMessage());
-            Result result=new Result("上传模型文件失败",false);
+            Result result = new Result("上传模型文件失败",false);
             return JSON.toJSONString(result);
         }
         modelFileService.addModelFile(modelName, modelDes, modelFormat, username, filePath);
@@ -87,46 +88,48 @@ public class FileController {
 
     @PostMapping(value="/uploadProcedure")
     public @ResponseBody String uploadProcedure(@RequestParam("program") MultipartFile program,@RequestParam("script") MultipartFile script,@RequestParam(value = "programName",defaultValue = "默认名称") String programName,
-                                                @RequestParam(value = "procedureDes",defaultValue = "默认描述")String procedureDes,@RequestParam(value = "notes",defaultValue = "默认备注")String notes,@RequestParam(value = "username",defaultValue = "默认值")String username){
+                                                @RequestParam(value = "procedureDes",defaultValue = "默认描述")String procedureDes,@RequestParam(value = "notes",defaultValue = "默认备注")String notes,@RequestParam(value = "username",
+            defaultValue = "默认值")String username){
         String fileName = program.getOriginalFilename();
-        String filePath = "/procedure/"+username;
+        String filePath = "/procedure/" + username;
 
 
         //程序和脚本是放在一个目录下面
         int folderCount = FileUtil.getFolderCount(filePath);
-        filePath=filePath+"/"+folderCount+"/program/";
+        filePath = filePath + "/" + folderCount + "/program/";
 
         try {
             FileUtil.uploadFile(program.getBytes(), filePath, fileName);
         } catch (Exception e) {
             // TODO: handle exception
             logger.info("上传训练程序失败"+e.getMessage());
-            Result result=new Result("上传训练程序失败",false);
+            Result result = new Result("上传训练程序失败",false);
             return JSON.toJSONString(result);
         }
 
         String scriptFileName = script.getOriginalFilename();
-        String scriptFilePath = "/procedure/"+username;
+        String scriptFilePath = "/procedure/" + username;
 
-        scriptFilePath=scriptFilePath+"/"+folderCount+"/script/";
+        scriptFilePath=scriptFilePath + "/" + folderCount + "/script/";
 
         try {
             FileUtil.uploadFile(script.getBytes(), scriptFilePath, scriptFileName);
         } catch (Exception e) {
             // TODO: handle exception
             logger.info("上传脚本程序失败"+e.getMessage());
-            Result result=new Result("上传脚本失败",false);
+            Result result = new Result("上传脚本失败",false);
             return JSON.toJSONString(result);
         }
 
 
-        TrainProcedure trainProcedure = new TrainProcedure(programName,procedureDes,filePath+"/"+fileName,scriptFilePath+"/"+scriptFileName,notes,username);
+        TrainProcedure trainProcedure = new TrainProcedure(programName,procedureDes,
+                filePath + "/" + fileName,scriptFilePath + "/" + scriptFileName, notes, username);
 
         int resultCode = trainService.upLoadProcedure(trainProcedure);
         String msg;
         boolean success;
-        msg=resultCode==1?"上传训练程序成功":"上传训练程序失败";
-        success=resultCode==1?true:false;
+        msg = resultCode == 1 ? "上传训练程序成功":"上传训练程序失败";
+        success = resultCode == 1 ? true : false;
         return JSON.toJSONString(new Result(msg, success));
     }
 

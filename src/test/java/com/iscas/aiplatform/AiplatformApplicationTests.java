@@ -1,15 +1,11 @@
 package com.iscas.aiplatform;
 
 import com.iscas.aiplatform.entity.TrainInstance;
-import com.iscas.aiplatform.entity.TrainProcedure;
 import com.iscas.aiplatform.service.ModelFileService;
 import com.iscas.aiplatform.service.OutputFormatService;
-import com.iscas.aiplatform.service.TrainService;
-import com.iscas.aiplatform.utils.TimeUtil;
+import com.iscas.aiplatform.service.TrainProcedureService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
@@ -23,7 +19,7 @@ class AiplatformApplicationTests {
     private OutputFormatService outputFormatService;
 
     @Resource
-    private TrainService trainService;
+    private TrainProcedureService trainService;
     @Test
     void contextLoads() {
 
@@ -48,7 +44,7 @@ class AiplatformApplicationTests {
         TrainInstance trainInstance = new TrainInstance("33","33",1,"33","22",
                 "22","222","11",1,3,"22",23,"33","333");
 
-        System.out.println(trainService.listInstances("333"));
+       // System.out.println(trainService.listInstances("333"));
     }
 
 }

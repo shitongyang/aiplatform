@@ -69,7 +69,6 @@ public class OutputFormatController {
     @GetMapping("showOutputFormatByName")
     public String showOutputFormatName(@RequestParam String username){
         logger.info("根据用户名展示样本输出格式"+username);
-        //JSONObject object = JSONObject.parseObject(message);
         return outputFormatService.showSampleByName(username);
     }
 

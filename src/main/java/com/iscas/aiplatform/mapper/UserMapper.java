@@ -2,6 +2,7 @@ package com.iscas.aiplatform.mapper;
 
 import com.iscas.aiplatform.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.stereotype.Component;
 
 /**
