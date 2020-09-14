@@ -1,6 +1,5 @@
 package com.iscas.aiplatform.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**

@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
         Result result=new Result();
         User user = JSON.parseObject(userString, User.class);
         User user1=userMapper.findUserByName(user.getUsername());
-        if(user1==null) {
-            int i = userMapper.regist(user);
+        if(user1 == null) {
+            userMapper.regist(user);
             result.setMsg("注册成功");
             result.setSuccess(true);
             result.setDetail(user);

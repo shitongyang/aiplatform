@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin("*")
 public class SampleController {
+
     @Autowired
     private SampleService sampleService;
-    @RequestMapping(value = "/createSample",method = RequestMethod.GET)
+
+    @GetMapping(value = "/createSample")
     public void createSample(int id){
         sampleService.createSample(id);
     }
-    @RequestMapping(value="/stopSample",method = RequestMethod.GET)
+
+    @GetMapping(value="/stopSample")
     public void stopSample(int id){
         sampleService.stopSample(id);
     }

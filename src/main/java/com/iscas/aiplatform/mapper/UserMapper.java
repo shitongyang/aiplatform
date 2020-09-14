@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface UserMapper {
+
     String login(String username,String password);
     int regist(User user);
     User findUserByName(String username);

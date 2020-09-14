@@ -1,8 +1,6 @@
 package com.iscas.aiplatform.service;
 
-import com.iscas.aiplatform.entity.TrainInstance;
 import com.iscas.aiplatform.entity.TrainProcedure;
-
 import java.util.List;
 import java.util.Map;
 
@@ -10,10 +8,10 @@ import java.util.Map;
  * @Author yangshitong
  * @Date 2020/6/4 16:01
  * @Version 1.0
- * @Description:训练管理的服务接口
+ * @Description:训练程序的服务接口
  */
 
-public interface TrainService {
+public interface TrainProcedureService {
     /**
      * author: yangshitong
      * description: 上传用户执行目标训练程序和脚本
@@ -23,14 +21,7 @@ public interface TrainService {
      */
     int upLoadProcedure(TrainProcedure trainProcedure);
 
-    /**
-     * author: yangshitong
-     * description: 执行训练程序的启动
-     * @param
-     * @date 2020/6/4 16:08
-     * @return
-     */
-    String executeTrainingProgram();
+
 
     /**
      * author: YangShiTong
@@ -43,7 +34,7 @@ public interface TrainService {
 
     /**
      * author: YangShiTong
-     * description:
+     * description: 删除训练程序
      * @param id  训练程序的id
      * @date 2020/7/1 15:24
      * @return
@@ -52,7 +43,7 @@ public interface TrainService {
 
     /**
      * author: YangShiTong
-     * description: 获取用户上传的程序名字
+     * description: 获取用户上传的程序名字(用于创建训练实例)
      * @param username 用户名
      * @date 2020/7/2 15:38
      * @return
@@ -63,27 +54,14 @@ public interface TrainService {
      * author: YangShiTong
      * description: 根据描述获取故障集
      * @param formatDes 描述
+     * @param username 用户名
      * @date 2020/7/3 9:41
      * @return
      */
     List<Map<String,Object>> listFaultsByDes(String formatDes,String username);
 
-    /**
-     * author: YangShiTong
-     * description:
-     * @param   trainInstance 对象实例
-     * @date 2020/7/8 11:07
-     * @return
-     */
-    String insertTrainInstance(TrainInstance trainInstance);
 
 
-    /**
-     * author: YangShiTong
-     * description: 根据用户名获取实例
-     * @param username
-     * @date 2020/7/8 11:45
-     * @return
-     */
-    List<Map<String,Object>> listInstances(String username);
+
+
 }

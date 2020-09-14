@@ -34,12 +34,12 @@ public class UserController {
         }
         return userService.userLogin(object.getString("username"),object.getString("password"));
     }
+
     @ApiOperation(value = "用户注册")
-    @RequestMapping(value="/regist",method = RequestMethod.POST)
-    public String regist(@RequestBody String userString){
-        JSONObject object;
+    @PostMapping(value="/regist")
+    public String register(@RequestBody String userString){
         try {
-            object = JSONObject.parseObject(userString);
+            JSONObject.parseObject(userString);
         }catch (Exception e){
             System.out.println("前端传过来的参数不符合json格式");
             return Result.jsonErrorResult(userString);

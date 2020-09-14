@@ -2,10 +2,9 @@ package com.iscas.aiplatform.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.iscas.aiplatform.entity.Result;
-import com.iscas.aiplatform.entity.TrainInstance;
 import com.iscas.aiplatform.entity.TrainProcedure;
 import com.iscas.aiplatform.mapper.TrainProcedureMapper;
-import com.iscas.aiplatform.service.TrainService;
+import com.iscas.aiplatform.service.TrainProcedureService;
 import com.iscas.aiplatform.utils.AddNoUtil;
 import com.iscas.aiplatform.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ import java.util.Map;
  */
 
 @Service
-public class TrainServiceImpl implements TrainService {
+public class TrainProcedureServiceImpl implements TrainProcedureService {
 
     @Autowired
     private TrainProcedureMapper trainProcedureMapper;
@@ -32,17 +31,6 @@ public class TrainServiceImpl implements TrainService {
         return trainProcedureMapper.insertTrainProcedure(trainProcedure);
     }
 
-    @Override
-    public String executeTrainingProgram() {
-        //获取上传的执行脚本和训练程序
-        String shell = null;
-        try {
-            Runtime.getRuntime().exec(shell);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     @Override
     public String listProcedures(String username) {
@@ -78,22 +66,7 @@ public class TrainServiceImpl implements TrainService {
         return trainProcedureMapper.listFaultsByDes(formatDes, username);
     }
 
-    @Override
-    public String insertTrainInstance(TrainInstance trainInstance) {
-        Result result = new Result();
-        if(trainProcedureMapper.insertTrainInstance(trainInstance) == 1){
-            result.setSuccess(true);
-            result.setMsg("创建实例成功");
-        }else {
-            result.setSuccess(false);
-            result.setMsg("创建实例失败");
-        }
-        return JSON.toJSONString(result);
-    }
 
-    @Override
-    public List<Map<String, Object>> listInstances(String username) {
-        List resultList=trainProcedureMapper.listInstances(username);
-        return AddNoUtil.addNo(resultList);
-    }
+
+
 }
